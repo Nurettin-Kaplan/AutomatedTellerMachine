@@ -16,6 +16,7 @@ struct User{
 void Login(int lineCount);
 int LineCount();
 void Menu(char* choice);
+void Accept(char* answer);
 
 int main(void){
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -23,6 +24,7 @@ int main(void){
 	
 	int i;
 	static char choice;
+	static char answer;
 	
 	printf("\n\t\tWelcome to the ATM\n\n");
 	
@@ -30,7 +32,8 @@ int main(void){
 
 	do{
 		Menu(&choice);
-		
+		Accept(&answer);
+		system("cls");
 		
 	}while(choice != 4);
 	
@@ -121,4 +124,18 @@ void Menu(char* choice){
 			"4- Exit the program\n"
 			"Select the operation you want to perform: ");
 	scanf(" %s", choice);
+}
+
+void Accept(char *answer){
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 9);
+	
+	printf("\nDo you want to continue with the operation?\n");
+	SetConsoleTextAttribute(hConsole, 10);
+	printf("Continue = 1 ");
+	SetConsoleTextAttribute(hConsole, 12);
+	printf("Cancel = 0\n");
+	SetConsoleTextAttribute(hConsole, 9);
+	printf("Answer: ");
+	scanf(" %s", answer);
 }
