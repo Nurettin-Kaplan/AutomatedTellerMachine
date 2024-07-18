@@ -17,25 +17,35 @@ void Login(int lineCount);
 int LineCount();
 void Menu(char* choice);
 void Accept(char* answer);
+void CheckBalance();
+void Deposit();
+void Withdraw();
 
 int main(void){
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, 9);
-	
-	int i;
+
 	static char choice;
 	static char answer;
 	
 	printf("\n\t\tWelcome to the ATM\n\n");
 	
 	Login(LineCount());
-
+	
 	do{
 		Menu(&choice);
 		Accept(&answer);
 		system("cls");
-		
-	}while(choice != 4);
+		if(answer == '1'){
+			switch(choice){
+				case '1': CheckBalance();	break;
+				case '2': Deposit();		break;
+				case '3': Withdraw();		break;
+				case '4': continue;			break;
+				default: printf("You have entered an invalid option. Please try again.\n"); break;
+			}
+		}
+	}while(choice != '4' || answer != '1');
 	
 	system("pause");
 	return 0;
@@ -138,4 +148,16 @@ void Accept(char *answer){
 	SetConsoleTextAttribute(hConsole, 9);
 	printf("Answer: ");
 	scanf(" %s", answer);
+}
+
+void CheckBalance(){
+	//
+}
+
+void Deposit(){
+	//
+}
+
+void Withdraw(){
+	//
 }
