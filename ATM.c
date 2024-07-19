@@ -188,5 +188,24 @@ void Deposit(){
 }
 
 void Withdraw(){
-	//
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 9);
+	
+	float withdrawn, temp;
+	
+	printf("\nEnter the amount of money you want to withdraw: ");
+	scanf("%f", &withdrawn);
+	
+	temp = accountBalance - withdrawn;
+	
+	if (temp >= 0){
+		accountBalance -= withdrawn;
+		SetConsoleTextAttribute(hConsole, 10);
+		printf("\n\n\t\tTransaction successful.");
+	}
+	else{
+		SetConsoleTextAttribute(hConsole, 12);
+		printf("\n\n\t\tYour balance is insufficient.");
+	}
+	CheckBalance();
 }
