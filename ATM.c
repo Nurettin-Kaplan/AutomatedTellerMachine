@@ -7,7 +7,7 @@
 #define WHITE 15
 #define BLUE 9
 
-struct User{
+struct User {
 	char username[20];
 	char password[20];
 	float balance;
@@ -20,78 +20,78 @@ void Accept(char* answer);
 void CheckBalance();
 void Deposit();
 void Withdraw();
+void UpdateFile(int lineCount);
 
 static char accountUsername[20], accountPassword[20];
 static float accountBalance;
 
-int main(void){
+int main(void) {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, 9);
 
 	static char choice;
 	static char answer;
-	
+
 	printf("\n\t\tWelcome to the ATM\n\n");
-	
+
 	Login(LineCount());
-	
-	do{
+
+	do {
 		Menu(&choice);
 		Accept(&answer);
 		system("cls");
-		if(answer == '1'){
-			switch(choice){
-				case '1': CheckBalance();	break;
-				case '2': Deposit();					break;
-				case '3': Withdraw();					break;
-				case '4': continue;						break;
-				default: printf("You have entered an invalid option. Please try again.\n"); break;
+		if(answer == '1') {
+			switch(choice) {
+				case '1':	CheckBalance();							break;
+				case '2':	Deposit();	UpdateFile(LineCount());	break;
+				case '3':	Withdraw();	UpdateFile(LineCount());	break;
+				case '4':	continue;								break;
+				default:	printf("You have entered an invalid option. Please try again.\n");	break;
 			}
 		}
-	}while(choice != '4' || answer != '1');
+	} while(choice != '4' || answer != '1');
 	
 	system("pause");
 	return 0;
 }
 
-void Login(int lineCount){
+void Login(int lineCount) {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	
+
 	int i, j, isLogged = 0;
 	struct User user;
-	
+
 	FILE *file = fopen("users.txt", "r");
-	if(file == NULL){
+	if(file == NULL) {
 		SetConsoleTextAttribute(hConsole, 12);
 		perror("There was an error opening the file.\n");
 		exit(1);
 	}
-	
-	for(i = 0; i < 3; i++){
+
+	for(i = 0; i < 3; i++) {
 		SetConsoleTextAttribute(hConsole, 9);
-		
+
 		printf("\nUsername: ");
 		scanf("%s", accountUsername);
 		printf("Password: ");
 		scanf("%s", accountPassword);
-		
-		for(j = 0; j < lineCount; j++){
+
+		for(j = 0; j < lineCount; j++) {
 			fscanf(file, "%s %s %f", user.username, user.password, &user.balance);
-			
-			if(strcmp(user.username, accountUsername) == 0 && strcmp(user.password, accountPassword) == 0){
+
+			if(strcmp(user.username, accountUsername) == 0 && strcmp(user.password, accountPassword) == 0) {
 				isLogged++;
 				accountBalance = user.balance;
 			}
 		}
-		
-		if(i == 2 && isLogged == 0){
+
+		if(i == 2 && isLogged == 0) {
 			SetConsoleTextAttribute(hConsole, 12);
 			printf("\nYou have reached the maximum number of attempts. Exiting the program.\n");
 			SetConsoleTextAttribute(hConsole, 9);
 			system("pause");
 			exit(1);
-		}
-		else if(isLogged != 0){
+		} else if(isLogged != 0) {
 			break;
 		}
 		SetConsoleTextAttribute(hConsole, 14);
@@ -106,46 +106,46 @@ void Login(int lineCount){
 	system("cls");
 }
 
-int LineCount(){
+int LineCount() {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	
+
 	int lineCount = 0;
 	char ch;
-	
+
 	FILE *file = fopen("users.txt", "r");
-	if(file == NULL){
+	if(file == NULL) {
 		SetConsoleTextAttribute(hConsole, 12);
 		perror("There was an error opening the file.\n");
 		exit(1);
 	}
-	while((ch = fgetc(file)) != EOF){
-		if(ch == '\n'){
+	while((ch = fgetc(file)) != EOF) {
+		if(ch == '\n') {
 			lineCount++;
 		}
 	}
-	if(ch != '\n' && lineCount > 0){
+	if(ch != '\n' && lineCount > 0) {
 		lineCount++;
 	}
 	fclose(file);
-	
+
 	return lineCount;
 }
 
-void Menu(char* choice){
+void Menu(char* choice) {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, 9);
 	printf(	"\n1- Check balance\n"
-			"2- Deposit money\n"
-			"3- Withdraw money\n"
-			"4- Exit the program\n"
-			"Select the operation you want to perform: ");
+	        "2- Deposit money\n"
+	        "3- Withdraw money\n"
+	        "4- Exit the program\n"
+	        "Select the operation you want to perform: ");
 	scanf(" %s", choice);
 }
 
-void Accept(char *answer){
+void Accept(char *answer) {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, 9);
-	
+
 	printf("\nDo you want to continue with the operation?\n");
 	SetConsoleTextAttribute(hConsole, 10);
 	printf("Continue = 1 ");
@@ -156,7 +156,7 @@ void Accept(char *answer){
 	scanf(" %s", answer);
 }
 
-void CheckBalance(){
+void CheckBalance() {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, 9);
 	printf("\n\n-----------------------------------------------------\n");
@@ -170,42 +170,70 @@ void CheckBalance(){
 	system("cls");
 }
 
-void Deposit(){
+void Deposit() {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, 9);
-	
+
 	float deposited;
-	
+
 	printf("\nEnter the amount of money you want to deposit: ");
 	scanf("%f", &deposited);
-	
+
 	accountBalance += deposited;
-	
+
 	SetConsoleTextAttribute(hConsole, 10);
 	printf("\n\n\t\tTransaction successful.");
-	
+
 	CheckBalance();
 }
 
-void Withdraw(){
+void Withdraw() {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, 9);
-	
+
 	float withdrawn, temp;
-	
+
 	printf("\nEnter the amount of money you want to withdraw: ");
 	scanf("%f", &withdrawn);
-	
+
 	temp = accountBalance - withdrawn;
-	
-	if (temp >= 0){
+
+	if (temp >= 0) {
 		accountBalance -= withdrawn;
 		SetConsoleTextAttribute(hConsole, 10);
 		printf("\n\n\t\tTransaction successful.");
-	}
-	else{
+	} else {
 		SetConsoleTextAttribute(hConsole, 12);
 		printf("\n\n\t\tYour balance is insufficient.");
 	}
+
 	CheckBalance();
+}
+
+void UpdateFile(int lineCount) {
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	int i;
+	struct User account;
+
+	FILE *file1 = fopen("users.txt", "r");
+	FILE *file2 = fopen("newUsers.txt", "w");
+	if(file1 == NULL || file2 == NULL) {
+		SetConsoleTextAttribute(hConsole, 12);
+		perror("There was an error opening the file.\n");
+		exit(1);
+	}
+
+	for(i = 1; i < lineCount; i++) {
+		fscanf(file1, "%s %s %f", &account.username, &account.password, &account.balance);
+		if(strcmp(account.username, accountUsername) == 0) {
+			fprintf(file2, "%s %s %.2f\n", account.username, account.password, accountBalance);
+			continue;
+		}
+		fprintf(file2, "%s %s %.2f\n", account.username, account.password, account.balance);
+	}
+	fclose(file1);
+	fclose(file2);
+	remove("users.txt");
+	rename("newUsers.txt", "users.txt");
 }
