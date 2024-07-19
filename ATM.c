@@ -17,9 +17,12 @@ void Login(int lineCount);
 int LineCount();
 void Menu(char* choice);
 void Accept(char* answer);
-void CheckBalance();
+void CheckBalance(int lineCount);
 void Deposit();
 void Withdraw();
+
+static char accountUsername[20], accountPassword[20];
+static float accountBalance;
 
 int main(void){
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -38,10 +41,10 @@ int main(void){
 		system("cls");
 		if(answer == '1'){
 			switch(choice){
-				case '1': CheckBalance();	break;
-				case '2': Deposit();		break;
-				case '3': Withdraw();		break;
-				case '4': continue;			break;
+				case '1': CheckBalance(LineCount());	break;
+				case '2': Deposit();					break;
+				case '3': Withdraw();					break;
+				case '4': continue;						break;
 				default: printf("You have entered an invalid option. Please try again.\n"); break;
 			}
 		}
@@ -55,7 +58,6 @@ void Login(int lineCount){
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	
 	int i, j, isLogged = 0;
-	char username[20], password[20];
 	struct User user;
 	
 	FILE *file = fopen("users.txt", "r");
@@ -68,16 +70,17 @@ void Login(int lineCount){
 	for(i = 0; i < 3; i++){
 		SetConsoleTextAttribute(hConsole, 9);
 		
-		printf("\n\t\tUsername: ");
-		scanf("%s", username);
-		printf("\t\tPassword: ");
-		scanf("%s", password);
+		printf("\nUsername: ");
+		scanf("%s", accountUsername);
+		printf("Password: ");
+		scanf("%s", accountPassword);
 		
 		for(j = 0; j < lineCount; j++){
 			fscanf(file, "%s %s %f", user.username, user.password, &user.balance);
 			
-			if(strcmp(user.username, username) == 0 && strcmp(user.password, password) == 0){
+			if(strcmp(user.username, accountUsername) == 0 && strcmp(user.password, accountPassword) == 0){
 				isLogged++;
+				accountBalance = user.balance;
 			}
 		}
 		
@@ -97,7 +100,10 @@ void Login(int lineCount){
 	fclose(file);
 
 	SetConsoleTextAttribute(hConsole, 10);
-	printf("\n\t\tLogin successful.\n");
+	printf("\n\t\tLogin successful.\n\n");
+	SetConsoleTextAttribute(hConsole, 9);
+	system("pause");
+	system("cls");
 }
 
 int LineCount(){
@@ -150,8 +156,18 @@ void Accept(char *answer){
 	scanf(" %s", answer);
 }
 
-void CheckBalance(){
-	//
+void CheckBalance(int lineCount){
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 9);
+	printf("\n\n-----------------------------------------------------\n");
+	SetConsoleTextAttribute(hConsole, 15);
+	printf("\nBalance: ");
+	SetConsoleTextAttribute(hConsole, 10);
+	printf("%.2f", accountBalance);
+	SetConsoleTextAttribute(hConsole, 9);
+	printf("\n\n-----------------------------------------------------\n\n");
+	system("pause");
+	system("cls");
 }
 
 void Deposit(){

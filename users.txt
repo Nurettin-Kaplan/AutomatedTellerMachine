@@ -1,1 +1,3 @@
-NurettinKaplaan 1016 124000
+NurettinKaplaan 1016 4750
+AsliErbasi 1209 3250
+AsrinAslan 1330 1550
