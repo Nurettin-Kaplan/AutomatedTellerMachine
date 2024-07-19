@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<windows.h>
 #include<string.h>
+#include<stdlib.h>
 #define RED 12		// color definitions
 #define GREEN 10
 #define YELLOW 14
@@ -58,16 +59,11 @@ int main(void) {
 void Login(int lineCount) {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	int i, j, isLogged = 0;
+	static int isLogged = 0;
+	int i, j;
 	struct User user;
 
-	FILE *file = fopen("users.txt", "r");
-	if(file == NULL) {
-		SetConsoleTextAttribute(hConsole, 12);
-		perror("There was an error opening the file.\n");
-		exit(1);
-	}
-
+	
 	for(i = 0; i < 3; i++) {
 		SetConsoleTextAttribute(hConsole, 9);
 
@@ -77,27 +73,34 @@ void Login(int lineCount) {
 		scanf("%s", accountPassword);
 
 		for(j = 0; j < lineCount; j++) {
-			fscanf(file, "%s %s %f", user.username, user.password, &user.balance);
-
-			if(strcmp(user.username, accountUsername) == 0 && strcmp(user.password, accountPassword) == 0) {
-				isLogged++;
-				accountBalance = user.balance;
+			
+			FILE *file = fopen("users.txt", "r");
+			if(file == NULL) {
+				SetConsoleTextAttribute(hConsole, 12);
+				perror("There was an error opening the file.\n");
+				exit(1);
 			}
+			fscanf(file, "%s %s %f", user.username, user.password, &user.balance);
+			if((strcmp(user.username, accountUsername) == 0) && (strcmp(user.password, accountPassword) == 0)) {
+				accountBalance = user.balance;
+				isLogged++;
+			}
+			fclose(file);
 		}
-
-		if(i == 2 && isLogged == 0) {
+		if(isLogged != 0) {
+			break;
+		}	
+		SetConsoleTextAttribute(hConsole, 14);
+		printf("\n\t\tYou have %d attempts left.\n", (2 - i));
+	}
+	
+	if(isLogged == 0) {
 			SetConsoleTextAttribute(hConsole, 12);
 			printf("\nYou have reached the maximum number of attempts. Exiting the program.\n");
 			SetConsoleTextAttribute(hConsole, 9);
 			system("pause");
 			exit(1);
-		} else if(isLogged != 0) {
-			break;
 		}
-		SetConsoleTextAttribute(hConsole, 14);
-		printf("\n\t\tYou have %d attempts left.\n", (2 - i));
-	}
-	fclose(file);
 
 	SetConsoleTextAttribute(hConsole, 10);
 	printf("\n\t\tLogin successful.\n\n");
