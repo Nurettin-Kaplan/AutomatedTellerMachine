@@ -17,7 +17,7 @@ void Login(int lineCount);
 int LineCount();
 void Menu(char* choice);
 void Accept(char* answer);
-void CheckBalance(int lineCount);
+void CheckBalance();
 void Deposit();
 void Withdraw();
 
@@ -41,7 +41,7 @@ int main(void){
 		system("cls");
 		if(answer == '1'){
 			switch(choice){
-				case '1': CheckBalance(LineCount());	break;
+				case '1': CheckBalance();	break;
 				case '2': Deposit();					break;
 				case '3': Withdraw();					break;
 				case '4': continue;						break;
@@ -156,7 +156,7 @@ void Accept(char *answer){
 	scanf(" %s", answer);
 }
 
-void CheckBalance(int lineCount){
+void CheckBalance(){
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, 9);
 	printf("\n\n-----------------------------------------------------\n");
@@ -171,7 +171,20 @@ void CheckBalance(int lineCount){
 }
 
 void Deposit(){
-	//
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 9);
+	
+	float deposited;
+	
+	printf("\nEnter the amount of money you want to deposit: ");
+	scanf("%f", &deposited);
+	
+	accountBalance += deposited;
+	
+	SetConsoleTextAttribute(hConsole, 10);
+	printf("\n\n\t\tTransaction successful.");
+	
+	CheckBalance();
 }
 
 void Withdraw(){
