@@ -23,7 +23,7 @@ This project is an ATM system implemented in C. Users can check their account ba
    Clone the repository from GitHub or download the source code from another source.
 
    ```bash
-   git clone https://github.com/YOUR_USERNAME/ATM-System.git
+   git clone https://github.com/Nurettin-Kaplan/AutomatedTellerMachine.git
    ```
 
 2. **Compile**
@@ -31,17 +31,17 @@ This project is an ATM system implemented in C. Users can check their account ba
    To compile the code, run the following command in your terminal or command prompt:
 
    ```bash
-   gcc -o atm atm.c
+   gcc -o ATM ATM.c
    ```
 
-   Here, `atm.c` should be the name of your source file, and `atm` is the name of the executable file that will be created.
+   Here, `ATM.c` should be the name of your source file, and `ATM` is the name of the executable file that will be created.
 
 3. **Run**
 
    After a successful compilation, run the program with:
 
    ```bash
-   ./atm
+   ./ATM
    ```
 
 ## Usage
@@ -63,13 +63,13 @@ This project is an ATM system implemented in C. Users can check their account ba
 
 ## Files
 
-- `atm.c`: Source code for the ATM system.
+- `ATM.c`: Source code for the ATM system.
 - `users.txt`: File containing user information (username, password, and balance).
 - `newUsers.txt`: Temporarily used file for updating user information.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](https://github.com/Nurettin-Kaplan/AutomatedTellerMachine/blob/master/LICENSE.txt).
 
 ## Author
 
