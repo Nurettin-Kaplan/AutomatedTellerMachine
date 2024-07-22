@@ -1,9 +1,13 @@
-```markdown
-# ATM System
+### ATM System
 
+---
+
+#### Overview
 This project is an ATM system implemented in C. Users can check their account balance, deposit money, and withdraw money through this ATM system. It also includes an authentication mechanism for user login.
 
-## Features
+---
+
+#### Features
 
 - **Login**: Login with username and password.
 - **Check Balance**: View account balance.
@@ -11,14 +15,11 @@ This project is an ATM system implemented in C. Users can check their account ba
 - **Withdraw**: Withdraw money from the account.
 - **File Update**: Save user balance to a file.
 
-## Requirements
+---
 
-- C compiler (e.g., GCC)
-- Windows operating system (due to the use of Windows API)
+#### Installation
 
-## Installation
-
-1. **Download the Code**
+1. **Download the Code:**
 
    Clone the repository from GitHub or download the source code from another source.
 
@@ -44,41 +45,53 @@ This project is an ATM system implemented in C. Users can check their account ba
    ./ATM
    ```
 
-## Usage
+---
 
-1. **Login**
+#### Usage
+
+1. **Login:**
 
    - When the program starts, you will be prompted to enter your username and password.
    - The program will exit after three failed login attempts.
 
-2. **Main Menu**
+2. **Main Menu:**
 
    The main menu provides the following options:
-   - `1`: Check balance
-   - `2`: Deposit money
-   - `3`: Withdraw money
-   - `4`: Exit the program
+   - **1:** Check balance
+   - **2:** Deposit money
+   - **3:** Withdraw money
+   - **4:** Exit the program
 
    You can select the desired operation by entering the corresponding number.
 
-## Files
+---
 
-- `ATM.c`: Source code for the ATM system.
-- `users.txt`: File containing user information (username, password, and balance).
-- `newUsers.txt`: Temporarily used file for updating user information.
+#### Files
 
-## License
+- **ATM.c:** Source code for the ATM system.
+- **users.txt:** File containing user information (username, password, and balance).
+- **newUsers.txt:** Temporarily used file for updating user information.
+
+---
+
+#### License
 
 This project is licensed under the [MIT License](https://github.com/Nurettin-Kaplan/AutomatedTellerMachine/blob/master/LICENSE.txt).
 
-## Author
+---
 
-- [Nurettin Kaplan](https://github.com/Nurettin-Kaplan) - Project owner and developer.
+#### Author
 
-## Contact
+[Nurettin Kaplan](https://github.com/Nurettin-Kaplan) - Project owner and developer.
+
+---
+
+#### Contact
 
 For any questions or issues, you can reach out via [email address](nurettinkaplaan@gmail.com).
-```
 
-### Notes
-- Ensure that `users.txt` contains the necessary user information for the system to function correctly.
+---
+
+#### Notes
+
+Ensure that `users.txt` contains the necessary user information for the system to function correctly.
